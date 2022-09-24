@@ -38,4 +38,25 @@ public class MembershipRepositoryTest {
         assertThat(result.getMembershipType()).isEqualTo(MembershipType.NAVER);
         assertThat(result.getPoint()).isEqualTo(10000);
     }
+
+    @Test
+    public void 멤버십이_존재하는지_테스트() {
+        // given
+        final Membership membership = Membership.builder()
+                .userId("userId")
+                .membershipType(MembershipType.NAVER)
+                .point(10000)
+                .build();
+        membershipRepository.save(membership);
+
+        // when
+        final Membership findResult = membershipRepository.findByUserIdAndMembershipType("userId", MembershipType.NAVER);
+
+        // then
+        assertThat(findResult).isNotNull();
+        assertThat(findResult.getId()).isNotNull();
+        assertThat(findResult.getUserId()).isEqualTo("userId");
+        assertThat(findResult.getMembershipType()).isEqualTo(MembershipType.NAVER);
+        assertThat(findResult.getPoint()).isEqualTo(10000);
+    }
 }
