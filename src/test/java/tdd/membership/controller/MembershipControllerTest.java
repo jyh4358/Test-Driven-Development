@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import tdd.membership.dto.MembershipRequest;
 import tdd.membership.model.MembershipType;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -55,7 +56,7 @@ public class MembershipControllerTest {
     }
 
     private MembershipRequest membershipRequest(final Integer point, final MembershipType membershipType) {
-        return MembershipRequest.createMembershopRequest(point, membershipType);
+        return MembershipRequest.createMembershipRequest(point, membershipType);
     }
 
 
