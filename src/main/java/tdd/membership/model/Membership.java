@@ -38,12 +38,14 @@ public class Membership {
 
     @Builder
     public Membership(
+            Long id,
             MembershipType membershipType,
             String userId,
             Integer point,
             LocalDateTime createdAt,
             LocalDateTime updatedAt
     ) {
+        this.id = id;
         this.membershipType = membershipType;
         this.userId = userId;
         this.point = point;
