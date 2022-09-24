@@ -16,6 +16,7 @@ import tdd.membership.model.MembershipType;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static tdd.membership.constants.MembershipConstants.USER_ID_HEADER;
 
 @ExtendWith(MockitoExtension.class)
 public class MembershipControllerTest {
@@ -55,10 +56,59 @@ public class MembershipControllerTest {
         resultActions.andExpect(status().isBadRequest());
     }
 
-    private MembershipRequest membershipRequest(final Integer point, final MembershipType membershipType) {
-        return MembershipRequest.createMembershipRequest(point, membershipType);
+    @Test
+    public void 멤버십등록실패_포인트가null() throws Exception {
+        // given
+        final String url = "/api/v1/memberships";
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .header(USER_ID_HEADER, "12345")
+                        .content(gson.toJson(membershipRequest(null, MembershipType.NAVER)))
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        resultActions.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void 멤버십등록실패_포인트가음수() throws Exception {
+        // given
+        final String url = "/api/v1/memberships";
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .header(USER_ID_HEADER, "12345")
+                        .content(gson.toJson(membershipRequest(-1, MembershipType.NAVER)))
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        resultActions.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void 멤버십등록실패_멤버십종류가Null() throws Exception {
+        // given
+        final String url = "/api/v1/memberships";
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .header(USER_ID_HEADER, "12345")
+                        .content(gson.toJson(membershipRequest(10000, null)))
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        resultActions.andExpect(status().isBadRequest());
     }
 
 
-
+    private MembershipRequest membershipRequest(final Integer point, final MembershipType membershipType) {
+        return MembershipRequest.createMembershipRequest(point, membershipType);
+    }
 }
