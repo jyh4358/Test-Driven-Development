@@ -5,5 +5,5 @@ import tdd.membership.model.Membership;
 import tdd.membership.model.MembershipType;
 
 public interface MembershipRepository extends JpaRepository<Membership, Long> {
-    Membership findByUserIdAndMembershipType(final String userId, final MembershipType naver);
+    Membership findByUserIdAndMembershipType(final String userId, final MembershipType membershipType);
 }

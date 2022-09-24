@@ -2,14 +2,27 @@ package tdd.membership.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import tdd.membership.exception.MembershipErrorResult;
+import tdd.membership.exception.MembershipException;
 import tdd.membership.model.Membership;
 import tdd.membership.model.MembershipType;
+import tdd.membership.repository.MembershipRepository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
 public class MembershipServiceTest {
+
+    @InjectMocks
+    private MembershipService target;
+
+    @Mock
+    private MembershipRepository membershipRepository;
 
     private final String userId = "userId";
     private final MembershipType membershipType = MembershipType.NAVER;
