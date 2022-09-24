@@ -18,11 +18,12 @@ public class Membership {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 20)
-    private String membershipName;
+    @Enumerated(EnumType.STRING)
+    private MembershipType membershipType;
 
     @Column(nullable = false)
     private String userId;
+
     @Column(nullable = false)
     @ColumnDefault("0")
     private Integer point;
@@ -37,13 +38,13 @@ public class Membership {
 
     @Builder
     public Membership(
-            String membershipName,
+            MembershipType membershipType,
             String userId,
             Integer point,
             LocalDateTime createdAt,
             LocalDateTime updatedAt
     ) {
-        this.membershipName = membershipName;
+        this.membershipType = membershipType;
         this.userId = userId;
         this.point = point;
         this.createdAt = createdAt;
