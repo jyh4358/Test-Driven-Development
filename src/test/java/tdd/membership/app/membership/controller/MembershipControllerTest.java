@@ -362,11 +362,11 @@ public class MembershipControllerTest {
     @Test
     public void 멤버십적립실패_사용자식별값이헤더에없음() throws Exception {
         // given
-        final String url = "/api/v1/memberships/-1/accumulate";
+        final String url = "/api/v1/memberships/{id}/accumulate";
 
         // when
         final ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.post(url)
+                MockMvcRequestBuilders.put(url, -1)
                         .content(gson.toJson(membershipRequest(10000, MembershipType.NAVER)))
                         .contentType(MediaType.APPLICATION_JSON)
         );
@@ -378,11 +378,11 @@ public class MembershipControllerTest {
     @Test
     public void 멤버십적립실패_포인트가음수() throws Exception {
         // given
-        final String url = "/api/v1/memberships/-1/accumulate";
+        final String url = "/api/v1/memberships/{id}/accumulate";
 
         // when
         final ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.post(url)
+                MockMvcRequestBuilders.put(url, -1)
                         .header(USER_ID_HEADER, "12345")
                         .content(gson.toJson(membershipRequest(-1, MembershipType.NAVER)))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -395,11 +395,11 @@ public class MembershipControllerTest {
     @Test
     public void 멤버십적립성공() throws Exception {
         // given
-        final String url = "/api/v1/memberships/-1/accumulate";
+        final String url = "/api/v1/memberships/{id}/accumulate";
 
         // when
         final ResultActions resultActions = mockMvc.perform(
-                MockMvcRequestBuilders.post(url)
+                MockMvcRequestBuilders.put(url, -1)
                         .header(USER_ID_HEADER, "12345")
                         .content(gson.toJson(membershipRequest(10000, MembershipType.NAVER)))
                         .contentType(MediaType.APPLICATION_JSON)
