@@ -1,5 +1,6 @@
 package tdd.membership.service;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -99,13 +100,13 @@ public class MembershipServiceTest {
     @Test
     public void 멤버십상세조회실패_본인이아님() {
         // given
-        doReturn(Optional.empty()).when(membershipRepository).findById(membershipId);
+        doReturn(Optional.of(membership())).when(membershipRepository).findById(membershipId);
 
         // when
-        final MembershipException result = assertThrows(MembershipException.class, () -> target.getMembership(membershipId, "notowner"));
+        final MembershipException result = assertThrows(MembershipException.class, () -> target.getMembership(membershipId, "notOwner"));
 
         // then
-        assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.MEMBERSHIP_NOT_FOUND);
+        assertThat(result.getErrorResult()).isEqualTo(MembershipErrorResult.NOT_MEMBERSHIP_OWNER);
     }
 
     @Test
