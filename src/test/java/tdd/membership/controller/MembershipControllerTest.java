@@ -126,7 +126,23 @@ public class MembershipControllerTest {
         resultActions.andExpect(status().isBadRequest());
     }
 
+    @ParameterizedTest
+    @MethodSource("invalidMembershipAddParameter")
+    public void 멤버십등록실패_잘못된파라미터(final Integer point, final MembershipType membershipType) throws Exception {
+        // given
+        final String url = "/api/v1/memberships";
 
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.post(url)
+                        .header(USER_ID_HEADER, "12345")
+                        .content(gson.toJson(membershipRequest(10000, null)))
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        resultActions.andExpect(status().isBadRequest());
+    }
 
     @Test
     public void 멤버십등록실패_MemberService에서에러Throw() throws Exception {
@@ -182,5 +198,11 @@ public class MembershipControllerTest {
         return MembershipRequest.createMembershipRequest(point, membershipType);
     }
 
-
+    private static Stream<Arguments> invalidMembershipAddParameter() {
+        return Stream.of(
+                Arguments.of(null, MembershipType.NAVER),
+                Arguments.of(-1, MembershipType.NAVER),
+                Arguments.of(10000, null)
+        );
+    }
 }
