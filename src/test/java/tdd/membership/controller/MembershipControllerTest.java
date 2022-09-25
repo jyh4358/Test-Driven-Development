@@ -10,21 +10,21 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import tdd.membership.dto.MembershipDetailResponse;
-import tdd.membership.dto.MembershipRequest;
-import tdd.membership.dto.MembershipAddResponse;
+import tdd.membership.app.membership.controller.MembershipController;
+import tdd.membership.app.membership.dto.MembershipDetailResponse;
+import tdd.membership.app.membership.dto.MembershipRequest;
+import tdd.membership.app.membership.dto.MembershipAddResponse;
 import tdd.membership.exception.GlobalExceptionHandler;
 import tdd.membership.exception.MembershipErrorResult;
 import tdd.membership.exception.MembershipException;
-import tdd.membership.model.Membership;
-import tdd.membership.model.MembershipType;
-import tdd.membership.service.MembershipService;
+import tdd.membership.app.membership.model.Membership;
+import tdd.membership.app.membership.model.MembershipType;
+import tdd.membership.app.membership.service.MembershipService;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -34,7 +34,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static tdd.membership.constants.MembershipConstants.USER_ID_HEADER;
+import static tdd.membership.app.membership.constants.MembershipConstants.USER_ID_HEADER;
 
 @ExtendWith(MockitoExtension.class)
 public class MembershipControllerTest {

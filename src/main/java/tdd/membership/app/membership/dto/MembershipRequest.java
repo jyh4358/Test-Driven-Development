@@ -1,7 +1,7 @@
-package tdd.membership.dto;
+package tdd.membership.app.membership.dto;
 
 import lombok.*;
-import tdd.membership.model.MembershipType;
+import tdd.membership.app.membership.model.MembershipType;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

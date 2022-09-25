@@ -1,18 +1,17 @@
-package tdd.membership.service;
+package tdd.membership.app.membership.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tdd.membership.dto.MembershipAddResponse;
-import tdd.membership.dto.MembershipDetailResponse;
+import tdd.membership.app.membership.model.Membership;
+import tdd.membership.app.membership.repository.MembershipRepository;
+import tdd.membership.app.membership.dto.MembershipAddResponse;
+import tdd.membership.app.membership.dto.MembershipDetailResponse;
 import tdd.membership.exception.MembershipErrorResult;
 import tdd.membership.exception.MembershipException;
-import tdd.membership.model.Membership;
-import tdd.membership.model.MembershipType;
-import tdd.membership.repository.MembershipRepository;
+import tdd.membership.app.membership.model.MembershipType;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

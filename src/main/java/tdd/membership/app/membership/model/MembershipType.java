@@ -1,4 +1,4 @@
-package tdd.membership.model;
+package tdd.membership.app.membership.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

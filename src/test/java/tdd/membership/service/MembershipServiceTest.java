@@ -1,18 +1,18 @@
 package tdd.membership.service;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import tdd.membership.dto.MembershipAddResponse;
-import tdd.membership.dto.MembershipDetailResponse;
+import tdd.membership.app.membership.dto.MembershipAddResponse;
+import tdd.membership.app.membership.dto.MembershipDetailResponse;
 import tdd.membership.exception.MembershipErrorResult;
 import tdd.membership.exception.MembershipException;
-import tdd.membership.model.Membership;
-import tdd.membership.model.MembershipType;
-import tdd.membership.repository.MembershipRepository;
+import tdd.membership.app.membership.model.Membership;
+import tdd.membership.app.membership.model.MembershipType;
+import tdd.membership.app.membership.repository.MembershipRepository;
+import tdd.membership.app.membership.service.MembershipService;
 
 import java.util.Arrays;
 import java.util.List;

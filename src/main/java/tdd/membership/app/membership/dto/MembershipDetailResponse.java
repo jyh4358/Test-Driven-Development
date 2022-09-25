@@ -1,9 +1,9 @@
-package tdd.membership.dto;
+package tdd.membership.app.membership.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import tdd.membership.model.Membership;
-import tdd.membership.model.MembershipType;
+import tdd.membership.app.membership.model.Membership;
+import tdd.membership.app.membership.model.MembershipType;
 
 import java.time.LocalDateTime;
 

@@ -1,19 +1,19 @@
-package tdd.membership.controller;
+package tdd.membership.app.membership.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tdd.membership.dto.MembershipDetailResponse;
-import tdd.membership.dto.MembershipRequest;
-import tdd.membership.dto.MembershipAddResponse;
-import tdd.membership.service.MembershipService;
+import tdd.membership.app.membership.dto.MembershipDetailResponse;
+import tdd.membership.app.membership.service.MembershipService;
+import tdd.membership.app.membership.dto.MembershipRequest;
+import tdd.membership.app.membership.dto.MembershipAddResponse;
 
 import javax.validation.Valid;
 
 import java.util.List;
 
-import static tdd.membership.constants.MembershipConstants.USER_ID_HEADER;
+import static tdd.membership.app.membership.constants.MembershipConstants.USER_ID_HEADER;
 
 @RestController
 @RequiredArgsConstructor

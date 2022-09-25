@@ -1,8 +1,8 @@
-package tdd.membership.repository;
+package tdd.membership.app.membership.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import tdd.membership.model.Membership;
-import tdd.membership.model.MembershipType;
+import tdd.membership.app.membership.model.Membership;
+import tdd.membership.app.membership.model.MembershipType;
 
 import java.util.List;
 
