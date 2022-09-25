@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import tdd.membership.dto.MembershipRequest;
+import tdd.membership.exception.GlobalExceptionHandler;
 import tdd.membership.exception.MembershipErrorResult;
 import tdd.membership.exception.MembershipException;
 import tdd.membership.model.MembershipType;
@@ -39,6 +40,7 @@ public class MembershipControllerTest {
     public void init() {
         gson = new Gson();
         mockMvc = MockMvcBuilders.standaloneSetup(target)
+                .setControllerAdvice(new GlobalExceptionHandler())
                 .build();
     }
 
