@@ -52,4 +52,8 @@ public class Membership {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+
+    public void addPoint(int amount) {
+        this.point += amount;
+    }
 }
