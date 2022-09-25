@@ -61,4 +61,14 @@ public class MembershipController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/api/v1/memberships/{id}/accumulate")
+    public ResponseEntity<Void> accumulateMembershipPoint(
+            @RequestHeader(USER_ID_HEADER) final String userId,
+            @PathVariable final Long id,
+            @RequestBody @Valid final MembershipRequest membershipRequest) {
+
+        membershipService.accumulateMembershipPoint(id, userId, membershipRequest.getPoint());
+        return ResponseEntity.noContent().build();
+    }
+
 }
