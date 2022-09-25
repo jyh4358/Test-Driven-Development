@@ -51,4 +51,14 @@ public class MembershipController {
         return ResponseEntity.status(HttpStatus.CREATED).body(membershipAddResponse);
     }
 
+    @DeleteMapping("/api/v1/memberships/{id}")
+    public ResponseEntity<Void> removeMembership(
+            @RequestHeader(USER_ID_HEADER) final String userId,
+            @PathVariable Long id) {
+
+        membershipService.removeMembership(id, userId);
+
+        return ResponseEntity.noContent().build();
+    }
+
 }

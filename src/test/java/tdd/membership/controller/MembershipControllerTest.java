@@ -336,7 +336,7 @@ public class MembershipControllerTest {
         // when
         final ResultActions resultActions = mockMvc.perform(
                 MockMvcRequestBuilders.delete(url, -1)
-                        .header(USER_ID_HEADER, "1234")
+                        .header(USER_ID_HEADER, "12345")
         );
 
         // then
