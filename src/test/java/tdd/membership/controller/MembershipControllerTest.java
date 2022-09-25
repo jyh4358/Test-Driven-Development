@@ -32,8 +32,7 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static tdd.membership.constants.MembershipConstants.USER_ID_HEADER;
 
@@ -294,6 +293,70 @@ public class MembershipControllerTest {
 
         // then
         resultActions.andExpect(status().isOk());
+    }
+
+    @Test
+    public void 멤버십삭제실패_사용자식별값이헤더에없음() throws Exception {
+        // given
+        final String url = "/api/v1/memberships/{id}";
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.delete(url, -1)
+        );
+
+        // then
+        resultActions.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void 멤버십삭제실패_멤버십이존재하지않음() throws Exception {
+        // given
+        final String url = "/api/v1/memberships/{id}";
+        doThrow(new MembershipException(MembershipErrorResult.NOT_MEMBERSHIP_OWNER))
+                .when(membershipService).removeMembership(-1L, "12345");
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.delete(url, -1)
+                        .header(USER_ID_HEADER, "12345")
+        );
+
+        // then
+        resultActions.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void 멤버십삭제실패_본인이아님() throws Exception {
+        // given
+        final String url = "/api/v1/memberships/{id}";
+        doThrow(new MembershipException(MembershipErrorResult.NOT_MEMBERSHIP_OWNER))
+                .when(membershipService).removeMembership(-1L, "12345");
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.delete(url, -1)
+                        .header(USER_ID_HEADER, "1234")
+        );
+
+        // then
+        resultActions.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void 멤버십삭제성공() throws Exception {
+        // given
+        final String url = "/api/v1/memberships/{id}";
+        doNothing().when(membershipService).removeMembership(-1L, "12345");
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.delete(url, -1)
+                        .header(USER_ID_HEADER, "12345")
+        );
+
+        // then
+        resultActions.andExpect(status().isNoContent());
     }
 
 
