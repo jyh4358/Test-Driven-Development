@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import tdd.membership.dto.MembershipDetailResponse;
 import tdd.membership.dto.MembershipRequest;
 import tdd.membership.dto.MembershipAddResponse;
 import tdd.membership.exception.GlobalExceptionHandler;
@@ -26,6 +27,7 @@ import tdd.membership.model.MembershipType;
 import tdd.membership.service.MembershipService;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -228,7 +230,71 @@ public class MembershipControllerTest {
         resultActions.andExpect(status().isOk());
     }
 
+    @Test
+    public void 멤버십상세조회실패_사용자식별자값이헤더에없음() throws Exception {
+        // given
+        final String url = "/api/v1/memberships/{id}";
 
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.get(url, -1)
+        );
+
+        // then
+        resultActions.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void 멤버십상세조회실패_멤버십이존재하지않음() throws Exception {
+        // given
+        final String url = "/api/v1/memberships/{id}";
+        doThrow(new MembershipException(MembershipErrorResult.MEMBERSHIP_NOT_FOUND))
+                .when(membershipService).getMembership(-1L, "12345");
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.get(url, -1L)
+                        .header(USER_ID_HEADER, "12345")
+        );
+
+        // when
+        resultActions.andExpect(status().isNotFound());
+    }
+    @Test
+    public void 멤버십상세조회실패_본인이아님() throws Exception {
+        // given
+        final String url = "/api/v1/memberships/{id}";
+        doThrow(new MembershipException(MembershipErrorResult.NOT_MEMBERSHIP_OWNER))
+                .when(membershipService).getMembership(-1L, "12345");
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.get(url, -1L)
+                        .header(USER_ID_HEADER, "12345")
+        );
+
+        // when
+        resultActions.andExpect(status().isBadRequest());
+    }
+
+
+    @Test
+    public void 멤버십상세조회성공() throws Exception {
+        // given
+        final String url = "/api/v1/memberships/{id}";
+        final MembershipDetailResponse membershipAddResponse =
+                new MembershipDetailResponse(-1L, MembershipType.NAVER, 10000, LocalDateTime.now());
+        doReturn(membershipAddResponse).when(membershipService).getMembership(-1L, "12345");
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(
+                MockMvcRequestBuilders.get(url, -1)
+                        .header(USER_ID_HEADER, "12345")
+        );
+
+        // then
+        resultActions.andExpect(status().isOk());
+    }
 
 
 
@@ -237,6 +303,8 @@ public class MembershipControllerTest {
     private MembershipRequest membershipRequest(final Integer point, final MembershipType membershipType) {
         return MembershipRequest.createMembershipRequest(point, membershipType);
     }
+
+
 
     private static Stream<Arguments> invalidMembershipAddParameter() {
         return Stream.of(
