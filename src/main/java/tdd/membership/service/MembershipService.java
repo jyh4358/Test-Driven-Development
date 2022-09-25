@@ -9,6 +9,8 @@ import tdd.membership.model.Membership;
 import tdd.membership.model.MembershipType;
 import tdd.membership.repository.MembershipRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MembershipService {
@@ -30,5 +32,9 @@ public class MembershipService {
         Membership savedMembership = membershipRepository.save(membership);
 
         return MembershipResponse.of(savedMembership);
+    }
+
+    public List<Membership> getMembershipList(String userId) {
+        return membershipRepository.findAllByUserId(userId);
     }
 }
