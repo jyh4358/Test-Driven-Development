@@ -5,7 +5,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import tdd.membership.dto.MembershipResponse;
+import tdd.membership.dto.MembershipAddResponse;
+import tdd.membership.dto.MembershipDetailResponse;
 import tdd.membership.exception.MembershipErrorResult;
 import tdd.membership.exception.MembershipException;
 import tdd.membership.model.Membership;
@@ -53,7 +54,7 @@ public class MembershipServiceTest {
         doReturn(membership()).when(membershipRepository).save(any(Membership.class));
 
         // when
-        final MembershipResponse result = target.addMembership(userId, membershipType, point);
+        final MembershipAddResponse result = target.addMembership(userId, membershipType, point);
 
         // then
         assertThat(result.getId()).isNotNull();
@@ -74,7 +75,7 @@ public class MembershipServiceTest {
         )).when(membershipRepository).findAllByUserId(userId);
 
         // when
-        final List<Membership> result = target.getMembershipList(userId);
+        final List<MembershipDetailResponse> result = target.getMembershipList(userId);
 
         // then
         assertThat(result.size()).isEqualTo(3);

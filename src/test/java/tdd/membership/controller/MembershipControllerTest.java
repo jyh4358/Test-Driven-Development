@@ -10,14 +10,13 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import tdd.membership.dto.MembershipRequest;
-import tdd.membership.dto.MembershipResponse;
+import tdd.membership.dto.MembershipAddResponse;
 import tdd.membership.exception.GlobalExceptionHandler;
 import tdd.membership.exception.MembershipErrorResult;
 import tdd.membership.exception.MembershipException;
@@ -168,9 +167,9 @@ public class MembershipControllerTest {
     public void 멤버십등록성공() throws Exception {
         // given
         final String url = "/api/v1/memberships";
-        final MembershipResponse membershipResponse = new MembershipResponse(-1L, MembershipType.NAVER);
+        final MembershipAddResponse membershipAddResponse = new MembershipAddResponse(-1L, MembershipType.NAVER);
 
-        doReturn(membershipResponse)
+        doReturn(membershipAddResponse)
                 .when(membershipService)
                 .addMembership("12345", MembershipType.NAVER, 10000);
 
@@ -184,9 +183,9 @@ public class MembershipControllerTest {
         // then
         resultActions.andExpect(status().isCreated());
 
-        final MembershipResponse response = gson.fromJson(resultActions.andReturn()
+        final MembershipAddResponse response = gson.fromJson(resultActions.andReturn()
                 .getResponse()
-                .getContentAsString(StandardCharsets.UTF_8), MembershipResponse.class);
+                .getContentAsString(StandardCharsets.UTF_8), MembershipAddResponse.class);
 
         assertThat(response.getMembershipType()).isEqualTo(MembershipType.NAVER);
         assertThat(response.getId()).isNotNull();
