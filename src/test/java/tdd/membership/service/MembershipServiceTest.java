@@ -12,6 +12,9 @@ import tdd.membership.model.Membership;
 import tdd.membership.model.MembershipType;
 import tdd.membership.repository.MembershipRepository;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -60,6 +63,29 @@ public class MembershipServiceTest {
         verify(membershipRepository, times(1)).findByUserIdAndMembershipType(userId, membershipType);
         verify(membershipRepository, times(1)).save(any(Membership.class));
     }
+
+    @Test
+    public void 멤버십목록조회() {
+        // given
+        doReturn(Arrays.asList(
+                Membership.builder().build(),
+                Membership.builder().build(),
+                Membership.builder().build()
+        )).when(membershipRepository).findAllByUserId(userId);
+
+        // when
+        final List<Membership> result = target.getMembershipList(userId);
+
+        // then
+        assertThat(result.size()).isEqualTo(3);
+    }
+
+
+
+
+
+
+
 
     private Membership membership() {
         return Membership.builder()
