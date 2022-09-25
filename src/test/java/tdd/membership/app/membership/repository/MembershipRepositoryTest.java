@@ -1,4 +1,4 @@
-package tdd.membership.repository;
+package tdd.membership.app.membership.repository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

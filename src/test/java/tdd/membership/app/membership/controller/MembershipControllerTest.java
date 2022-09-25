@@ -1,4 +1,4 @@
-package tdd.membership.controller;
+package tdd.membership.app.membership.controller;
 
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
