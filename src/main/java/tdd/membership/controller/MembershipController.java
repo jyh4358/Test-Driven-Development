@@ -21,6 +21,15 @@ public class MembershipController {
 
     private final MembershipService membershipService;
 
+    @GetMapping("/api/v1/memberships/{id}")
+    public ResponseEntity<MembershipDetailResponse> getMembership(
+            @RequestHeader(USER_ID_HEADER) final String userId,
+            @PathVariable final Long id) {
+
+        return ResponseEntity.ok(membershipService.getMembership(id, userId));
+    }
+
+
     @GetMapping("/api/v1/memberships")
     public ResponseEntity<List<MembershipDetailResponse>> getMembershiplist(
             @RequestHeader(USER_ID_HEADER) final String userId) {
